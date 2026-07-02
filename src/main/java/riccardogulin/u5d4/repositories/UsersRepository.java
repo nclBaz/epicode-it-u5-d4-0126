@@ -1,6 +1,7 @@
 package riccardogulin.u5d4.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import riccardogulin.u5d4.entities.User;
 
@@ -30,5 +31,14 @@ public interface UsersRepository extends JpaRepository<User, Long> {
 
 	// LINK ALLA DOCUMENTAZIONE PER LE DERIVED QUERIES
 	// https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+
+	// --------------------------------------- JPQL QUERIES -------------------------------------------------
+	@Query("SELECT u FROM User u WHERE u.name = :name")
+	List<User> filterByNome(String name);
+
+	// --------------------------------------- SQL QUERIES -------------------------------------------------
+	@Query(nativeQuery = true, value = "SELECT * FROM users WHERE name = :name")
+	List<User> filterByNomeSQL(String name);
+
 
 }
