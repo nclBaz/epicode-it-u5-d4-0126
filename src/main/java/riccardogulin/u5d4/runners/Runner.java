@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import riccardogulin.u5d4.entities.User;
-import riccardogulin.u5d4.exceptions.NotFoundException;
 import riccardogulin.u5d4.services.UsersService;
 
 import java.util.Locale;
@@ -28,31 +27,37 @@ public class Runner implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Faker faker = new Faker(Locale.ITALIAN);
-		User newUser = new User(faker.lordOfTheRings().character(), faker.name().lastName(), faker.internet().emailAddress(), faker.internet().password());
-
+		User newUser = new User(faker.lordOfTheRings().character(), faker.name().lastName(), "aldo@gmail.com", faker.internet().password());
+//
 		this.usersService.saveNewUser(newUser);
+//
+//
+//		this.usersService.findAll().forEach(System.out::println);
+//
+//		try {
+//			System.out.println(this.usersService.findById(20));
+//		} catch (NotFoundException ex) {
+//			System.out.println(ex.getMessage());
+//		}
+//
+//		try {
+//			this.usersService.findByIdAndDelete(1);
+//		} catch (NotFoundException ex) {
+//			System.out.println(ex.getMessage());
+//		}
+//
+//		try {
+//			this.usersService.findByIdAndUpdate(8, new User("Ajeje", "Brazorf", "ajeje@gmail.com", "123456789"));
+//		} catch (NotFoundException ex) {
+//			System.out.println(ex.getMessage());
+//		}
 
+//		this.usersService.filterBySurname("Baglio").forEach(System.out::println);
 
-		this.usersService.findAll().forEach(System.out::println);
+		// this.usersService.filterByNameAndSurname("Aldo", "Baglio").forEach(System.out::println);
 
-		try {
-			System.out.println(this.usersService.findById(20));
-		} catch (NotFoundException ex) {
-			System.out.println(ex.getMessage());
-		}
-
-		try {
-			this.usersService.findByIdAndDelete(1);
-		} catch (NotFoundException ex) {
-			System.out.println(ex.getMessage());
-		}
-
-		try {
-			this.usersService.findByIdAndUpdate(8, new User("Ajeje", "Brazorf", "ajeje@gmail.com", "123456789"));
-		} catch (NotFoundException ex) {
-			System.out.println(ex.getMessage());
-		}
-
-
+//		this.usersService.filterByPartialName("aj").forEach(System.out::println);
+//
+// 		this.usersService.filterByNames(List.of("Aldo", "Ajeje", "Boromir")).forEach(System.out::println);
 	}
 }

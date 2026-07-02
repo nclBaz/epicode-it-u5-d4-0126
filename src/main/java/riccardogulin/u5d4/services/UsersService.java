@@ -19,7 +19,12 @@ public class UsersService {
 	}
 
 	public void saveNewUser(User newUser) {
-		// 1. TODO: Controlliamo che l'email non sia già in uso
+
+//		if (this.usersRepository.findByEmail(newUser.getEmail()).isPresent())
+//			throw new ValidationException("L'email " + newUser.getEmail() + " è già in uso!");
+
+		if (this.usersRepository.existsByEmail(newUser.getEmail())) throw new ValidationException("L'email " + newUser.getEmail() + " è già in uso!");
+
 		// 2. Altri controlli di validazione (es. password > 8 caratteri)
 		if (newUser.getPassword().length() < 8) throw new ValidationException("La password deve avere più di 8 caratteri");
 
@@ -71,4 +76,20 @@ public class UsersService {
 		log.info("L'utente " + found.getId() + " è stato correttamente modificato!");
 	}
 
+	public List<User> filterBySurname(String surname) {
+		return this.usersRepository.findBySurname(surname);
+	}
+
+	public List<User> filterByNameAndSurname(String name, String surname) {
+		return this.usersRepository.findByNameAndSurname(name, surname);
+	}
+
+	public List<User> filterByPartialName(String partialName) {
+		return this.usersRepository.findByNameStartingWithIgnoreCase(partialName);
+	}
+
+	public List<User> filterByNames(List<String> names) {
+		return this.usersRepository.findByNameIn(names);
+	}
 }
+
